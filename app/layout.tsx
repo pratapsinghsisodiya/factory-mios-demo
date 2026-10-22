@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./industrial.css";
 import DemoNotice from "../components/DemoNotice";
 import type { Metadata } from "next";
 

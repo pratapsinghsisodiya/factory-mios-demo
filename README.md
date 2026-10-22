@@ -4,9 +4,18 @@ A standalone interactive demonstration of Factory-MIOS manufacturing intelligenc
 
 Demo: https://pratapsinghsisodiya.github.io/factory-mios-demo/
 
-Explore fourteen dashboard views, plant and time filters, a Three.js factory, maintenance/inventory/safety/traceability records, downtime logging, CSV exports, and a sample-data assistant. No account is needed.
+Explore six distinct operating views for one automotive-components plant: energy management, water balance, production OEE, warehouse inventory, motor maintenance and RFID traceability. No account is needed.
 
-All data is synthetic. Changes are saved only in the visitor's browser; use **Guide & reset** to start again. The assistant uses preset rules, not a hosted AI service. This repository contains the demonstration interface and generated sample data only. It does not include the application's Python backend, database, credentials, or real client records. Live ingestion and account onboarding belong to the full application.
+All data is synthetic, with a fixed reference scenario of 21–22 October 2026 (IST). Changes are saved only in the visitor's browser; use **Methods & demo reset** to start again. This repository contains the demonstration interface and generated sample data only. It does not include the application's Python backend, database, credentials, or real client records. Live ingestion and account onboarding belong to the full application.
+
+- Energy: 15-minute kW/kVA demand, kWh register reconciliation, power factor, electrical readings and configurable example tariff.
+- Water: fresh intake, metered uses, storage change, residual, treated-water reuse and cooling-tower balance.
+- OEE: machine/shift-specific availability, performance and first-pass quality, with count inputs and a complete time-loss balance.
+- Warehouse: stock by SKU/lot/bin, reservations, QC hold, receipts, issues, transfers, counts, releases and a movement ledger.
+- Maintenance: named motor/sensor positions, vibration and bearing temperature, due work orders, manual completion, on-time execution and before/after readings at recorded speed/load.
+- RFID: passive-tag TX/backscatter/RX signal path, six portals, EPC-to-lot mapping, duplicate filtering, route validation and a quality gate linked to warehouse release.
+
+The in-app methodology page documents formulas, source references and scenario assumptions. Sensor limits are example site settings, not universal engineering standards. The factory schematic uses simplified illustrative geometry.
 
 ## Develop and verify
 
