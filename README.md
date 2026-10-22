@@ -4,7 +4,11 @@ A standalone interactive demonstration of Factory-MIOS manufacturing intelligenc
 
 Demo: https://pratapsinghsisodiya.github.io/factory-mios-demo/
 
-Explore six distinct operating views for one automotive-components plant: energy management, water balance, production OEE, warehouse inventory, motor maintenance and RFID traceability. No account is needed.
+Sign in using the public demo account: `demo@factorymios.example` / `Factory@123`. The static site's login is a browser-session demonstration, not secure server authentication. The default production control room unifies live production, reports, alarms and an AI-agent workflow preview. Energy, water, OEE, warehouse, maintenance and RFID remain available as detailed modules.
+
+The production replay advances by five seconds while the control room is open. It starts at 10:24 IST on 22 October 2026. Pause it or advance one minute during a presentation. Output per minute/hour/shift, running hours, reports and alarms derive from the same minute counters and state durations. A production day is 06:00 to 06:00 the following day; shifts A and B are scheduled, and C is unscheduled. Historical 21 October counts reconcile with the OEE view. Partial and future periods are identified explicitly.
+
+Idle reasons: No product or Planning. Breakdown reasons: Mechanical, Electrical, Control or IT, with required details. Operator entries change the simulation only. Alarm acknowledgement records receipt without clearing a fault. Reports export as CSV or through the browser print/PDF workflow. Agent recommendations use deterministic rules, show their evidence, and create browser-local review tasks; no LLM, notifications, physical PLC control or live telemetry service is connected.
 
 All data is synthetic, with a fixed reference scenario of 21–22 October 2026 (IST). Changes are saved only in the visitor's browser; use **Methods & demo reset** to start again. This repository contains the demonstration interface and generated sample data only. It does not include the application's Python backend, database, credentials, or real client records. Live ingestion and account onboarding belong to the full application.
 

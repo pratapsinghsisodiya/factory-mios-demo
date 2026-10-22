@@ -1,5 +1,7 @@
 import "./globals.css";
 import "./industrial.css";
+import "./control-room.css";
+import DemoSessionProvider from '../components/DemoSession';
 import DemoNotice from "../components/DemoNotice";
 import type { Metadata } from "next";
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body><DemoNotice/>{children}</body>
+      <body><DemoSessionProvider><DemoNotice/>{children}</DemoSessionProvider></body>
     </html>
   );
 }

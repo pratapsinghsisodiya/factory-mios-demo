@@ -73,10 +73,17 @@ export function oee(assetId = 'CNC-01', shift = 'A') {
   const total = asset.total + (shift === 'B' ? 8 : 0), good = asset.good + (shift === 'B' ? 9 : 0);
   const availability = run / planned, performance = asset.ideal * total / (run * 60), quality = good / total;
   const start = shift === 'A' ? 6 : 14;
-  const weights = [55, 65, 48, 64, 43, 68, 70, 67];
-  let allocated = 0;
-  const hourly = weights.map((w, i) => { const count = i === 7 ? total - allocated : Math.floor(w / 480 * total); allocated += count; return { time: String(start + i).padStart(2, '0') + ':00', actual: count, target: (i === 2 || i === 4 ? 45 : 60) * 60 / asset.ideal }; });
-  return { asset, counterOpening: asset.counter + (shift === 'B' ? asset.total : 0), planned, stop, run, total, good, rejected: total - good, availability, performance, quality, oee: availability * performance * quality, hourly,
+  let running = 0, counted = 0, accepted = 0;
+  const minutes = Array.from({length:480},(_,minute)=>{
+    const pause = (minute>=120&&minute<135)||(minute>=240&&minute<255);
+    const loss = [40,175,285,375].findIndex((s,i)=>minute>=s&&minute<s+stops[i]);
+    if(!pause&&loss<0) running++;
+    const cumulative=Math.floor(running*total/run+1e-8), cumulativeGood=Math.floor(cumulative*good/total+1e-8);
+    const row={minute,pause,loss,count:cumulative-counted,good:cumulativeGood-accepted};
+    counted=cumulative;accepted=cumulativeGood;return row;
+  });
+  const hourly=Array.from({length:8},(_,i)=>({time:String(start+i).padStart(2,'0')+':00',actual:minutes.slice(i*60,i*60+60).reduce((n,m)=>n+m.count,0),target:(i===2||i===4?45:60)*60/asset.ideal}));
+  return { asset, counterOpening: asset.counter + (shift === 'B' ? asset.total : 0), planned, stop, run, total, good, rejected: total - good, availability, performance, quality, oee: availability * performance * quality, hourly, minutes,
     losses: asset.reasons.map((reason, i) => ({ reason, minutes: stops[i], source: i === 1 ? 'PLC stop + HMI reason' : 'Operator reason code' })),
     timeLosses: [{ name: 'Scheduled breaks', minutes: 30, color: '#a9b3c0' }, { name: 'Stop losses', minutes: stop, color: '#bc5e45' }, { name: 'Speed losses', minutes: round(run - total * asset.ideal / 60), color: '#cc993d' }, { name: 'Quality losses', minutes: round((total - good) * asset.ideal / 60), color: '#9366a1' }, { name: 'Fully productive', minutes: round(good * asset.ideal / 60), color: '#2d7c68' }],
   };
